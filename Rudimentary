@@ -1,0 +1,45 @@
+import numpy as np
+menus = ["Hire employees", "Intitialize a new employee"]
+choice = None
+# Name, Years of Experience
+data = np.array([["Johnny", "Henry"],
+                [5, 6],
+                ["Python", "Java"]])
+
+def main_menu():
+    print("What would you like to do?")
+    for i, menu in enumerate(menus, 1):
+        print(f"{i}. {menu}")
+    choice = int(input())
+    if choice == 1:
+        hire_employee()
+    elif choice == 2:
+        new_employee()
+    else:
+        print("Invalid choice. Try again.")
+        main_menu()
+
+def new_employee():
+    global data 
+    name = input("What is your name?")
+    years = int(input("How many years of experience do you have?"))
+    field = input("What do you have experience in?")
+
+    new_column = np.array([[name], [years], [field]], dtype = object)
+    data = np.concatenate((data, new_column), axis = 1)
+    main_menu()
+
+def hire_employee():
+    global data 
+
+    print("Which employee would you like to hire?")
+    for i in range(data.shape[1]):
+        print(f"{i+1}. Employee with {data[1,i]} years of experience in {data[2,i]}.")
+    choice = int(input()) - 1
+
+    if 0 <= choice < data.shape[1]:
+        hired = data[:, choice]
+        print(f"You hired {hired[0]}, with {hired[1]} years of experience in {hired[2]}.")
+    main_menu()
+
+main_menu()
