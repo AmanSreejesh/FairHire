@@ -50,7 +50,7 @@ def admin():
         print(f"Raw Data: \n {data}")
         print(f"Organized Data:")
         for i in range (data.shape[1]):
-            print(f"You hired {data[0,i]}, with {data[1,i]} years of experience in {data[2,i]}.")
+            print(f"Employee {i+1} is {data[0,i]}, with {data[1,i]} years of experience in {data[2,i]}.")
 
     elif choice != "1234":
         print("Wrong password.")
