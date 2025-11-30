@@ -9,6 +9,8 @@ import os
 # -------------------
 # JSON helpers
 # -------------------
+# Path is where you want the data to be saved
+# Data is what you want to save
 def load_json(path):
     if not os.path.exists(path):
         return []
@@ -66,6 +68,7 @@ def generate_candidate_id():
 # -------------------
 # Employee Portal
 # -------------------
+# Remember: All data entered will be saved to the local resumes.json file, not implementing wipe button YET
 st.set_page_config(page_title="FairHire Resume Scrubber", layout="centered")
 st.title("FairHire Resume Scrubber (PDF Prototype)")
 st.caption("Prototype that removes race-linked identity markers from resumes.")
@@ -130,6 +133,7 @@ if "hired" not in st.session_state:
 def save_hired():
     save_json(hired_JSON, st.session_state.hired)
 
+# Each dropdown has a candidate to hire and the hire button, only scrubbed text is visible
 for candidate in candidates:
     cid = candidate["candidateId"]
     original = clean_extracted_text(candidate["originalText"])
@@ -140,8 +144,6 @@ for candidate in candidates:
         st.text(scrubbed)
 
         st.markdown("---")
-        st.subheader("Original Resume (Full)")
-        st.text(original)
 
         if st.button(f"Hire {cid}", key=f"hire_{cid}"):
             if not any(h["candidateId"] == cid for h in st.session_state.hired):
@@ -152,6 +154,7 @@ for candidate in candidates:
                 st.warning(f"{cid} is already hired.")
 
 st.markdown("---")
+# Shows hired candidates
 st.subheader("Hired Candidates")
 if st.session_state.hired:
     for h in st.session_state.hired:
@@ -159,6 +162,7 @@ if st.session_state.hired:
 else:
     st.info("No candidates hired yet.")
 
+# Wipes all hired candidates, 1st press updates, 2nd press shows new
 if st.button("Wipe Hired Candidates"):
     st.session_state.hired = []
     save_json("hired.json", st.session_state.hired)
