@@ -1,2 +1,2 @@
 # FairHire
-#Someone write up a readme
+To run the program, type "python -m pip install streamlit" and then "python -m streamlit run test.py"
