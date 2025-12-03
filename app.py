@@ -6,9 +6,7 @@ import string
 import json
 import os
 
-# -------------------
-# JSON helpers
-# -------------------
+
 # Path is where you want the data to be saved
 # Data is what you want to save
 def load_json(path):
@@ -24,9 +22,7 @@ def save_json(path, data):
     with open(path, "w") as f:
         json.dump(data, f, indent=4)
 
-# -------------------
 # Resume functions
-# -------------------
 def scrub_resume(text, name=None, city=None):
     result = text
 
@@ -65,10 +61,7 @@ def clean_extracted_text(text):
 def generate_candidate_id():
     return "Candidate #" + ''.join(random.choices(string.ascii_uppercase + string.digits, k=4))
 
-# -------------------
-# Employee Portal
-# -------------------
-# Remember: All data entered will be saved to the local resumes.json file, not implementing wipe button YET
+
 st.set_page_config(page_title="FairHire Resume Scrubber", layout="centered")
 st.title("FairHire Resume Scrubber (PDF Prototype)")
 st.caption("Prototype that removes race-linked identity markers from resumes.")
@@ -116,9 +109,8 @@ if st.button("Extract & Scrub Resume"):
     else:
         st.error("Please upload a PDF first.")
 
-# -------------------
 # Employer Portal
-# -------------------
+
 st.markdown("---")
 st.header("Employer Portal")
 
